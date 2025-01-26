@@ -63,7 +63,7 @@ A API oferece as seguinte funcionalidades:
 
 _Atenção: Garanta que você tenha o Docker instalado em sua máquina._
 
-- Acessando o [GitHub do projeto](git@github.com:Herick2D/flask-api.git), faça o clone do mesmo;
+- Acessando o [GitHub do projeto](https://github.com/Herick2D/flask-api.git), faça o clone do mesmo;
 - Acesse a pasta do projeto e execute o comando `docker-compose up --build` para criar a imagem do container e subir a aplicação;
 
 ## Observações
