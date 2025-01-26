@@ -1,0 +1,42 @@
+services:
+  app:
+    build: .
+    container_name: usuario_api
+    environment:
+      - HOST=postgres
+      - USER=postgres
+      - PASSWORD=postgres
+      - DATABASE=usuariodb
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - usuario_net
+
+  postgres:
+    image: postgres:13-alpine
+    container_name: usuario_api_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: usuariodb
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./scripts/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d usuariodb -h localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - usuario_net
+
+networks:
+  usuario_net:
+    driver: bridge
+
+volumes:
+  usuario_data:

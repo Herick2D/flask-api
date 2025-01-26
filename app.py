@@ -1,8 +1,16 @@
-from app import create_app, db
+from flask import Flask
+from flask_sqlalchemy import SQLAlchemy
+from app.config import Config
 
-app = create_app()
+db = SQLAlchemy()
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+def create_app():
+    app = Flask(__name__)
+    app.config.from_object(Config)
+    
+    db.init_app(app)
+
+    from app.routes import bp as routes_bp
+    app.register_blueprint(routes_bp)
+
+    return app
